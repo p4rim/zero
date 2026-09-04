@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# zero:summary=Toggles the window gaps globally between no gaps and the default.
+
+zero-hyprland-toggle window-no-gaps

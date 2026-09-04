@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# zero:summary=Launch a floating terminal with the Zero presentation wrapper
+# zero:args=<command>
+
+# Export the current theme's gum styling so gum widgets match the active theme
+# even after a theme switch (the inherited environment is captured at login).
+source zero-restart-gum
+
+cmd="$*"
+presentation_script="zero-show-logo; $cmd; if (( \$? != 130 )); then zero-show-done; fi"
+
+exec setsid uwsm-app -- xdg-terminal-exec --app-id=org.zero.terminal --title=Zero -e bash -c "$presentation_script"

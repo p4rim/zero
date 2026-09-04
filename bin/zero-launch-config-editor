@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# zero:summary=Open a config file in the user's editor and surface a toast
+# zero:args=<path>
+# zero:examples=zero launch config-editor ~/.config/hypr/hyprland.lua
+
+path="${1-}"
+
+if [[ -z $path ]]; then
+  echo "Usage: zero-launch-config-editor <path>" >&2
+  exit 1
+fi
+
+zero-notification-send -u low "Editing config file" "$path"
+exec zero-launch-editor "$path"

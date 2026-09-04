@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# zero:summary=Toggle single-window square aspect ratio.
+
+case $(zero-hyprland-toggle single-window-aspect-ratio) in
+  on) zero-notification-send -g  "Enable single-window square aspect ratio" ;;
+  off) zero-notification-send -g  "Disable single-window square aspect ratio" ;;
+esac

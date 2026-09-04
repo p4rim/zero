@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# zero:summary=Overwrite the user config for hyprsunset with the Zero default and restart the service.
+
+zero-refresh-config hypr/hyprsunset.conf
+zero-restart-hyprsunset

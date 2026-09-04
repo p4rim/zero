@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# zero:summary=Launch a TUI command in the default terminal with Zero styling
+# zero:args=[--app-id=<app-id>] <command> [args...]
+
+if [[ ${1:-} == --app-id=* ]]; then
+  APP_ID="${1#--app-id=}"
+  shift
+else
+  APP_ID="org.zero.$(basename $1)"
+fi
+
+exec setsid uwsm-app -- xdg-terminal-exec --app-id=$APP_ID -e "$1" "${@:2}"

@@ -1,0 +1,145 @@
+#!/bin/bash
+
+set -euo pipefail
+
+zero_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+cd "$zero_root"
+
+fail() {
+  echo "FAIL: $*" >&2
+  exit 1
+}
+
+while IFS= read -r script; do
+  [[ $(head -n 1 "$script") == "#!/bin/bash" ]] || continue
+  bash -n "$script"
+done < <(find bin install -type f | sort)
+bash -n install.sh
+
+python3 -c 'import ast, pathlib; ast.parse(pathlib.Path("bin/zero-file-select").read_text())'
+
+while IFS= read -r lua_file; do
+  luac -p "$lua_file"
+done < <(find config/hypr default/hypr themes/mono -type f -name '*.lua' | sort)
+
+node <<'NODE'
+const fs = require("fs");
+const path = require("path");
+
+const jsonFiles = ["config/zero/shell.json"];
+for (const pluginDir of fs.readdirSync("shell/plugins")) {
+  const manifest = path.join("shell/plugins", pluginDir, "manifest.json");
+  if (fs.existsSync(manifest)) jsonFiles.push(manifest);
+}
+for (const manifest of jsonFiles) JSON.parse(fs.readFileSync(manifest, "utf8"));
+
+function stripJsonComments(source) {
+  let result = "";
+  let inString = false;
+  let escaped = false;
+  let lineComment = false;
+  for (let index = 0; index < source.length; index++) {
+    const character = source[index];
+    const next = source[index + 1];
+    if (lineComment) {
+      if (character === "\n") {
+        lineComment = false;
+        result += character;
+      }
+      continue;
+    }
+    if (inString) {
+      result += character;
+      if (escaped) escaped = false;
+      else if (character === "\\") escaped = true;
+      else if (character === '"') inString = false;
+      continue;
+    }
+    if (character === '"') {
+      inString = true;
+      result += character;
+    } else if (character === "/" && next === "/") {
+      lineComment = true;
+      index++;
+    } else {
+      result += character;
+    }
+  }
+  return result;
+}
+
+function stripTrailingCommas(source) {
+  let result = "";
+  let inString = false;
+  let escaped = false;
+  for (let index = 0; index < source.length; index++) {
+    const character = source[index];
+    if (inString) {
+      result += character;
+      if (escaped) escaped = false;
+      else if (character === "\\") escaped = true;
+      else if (character === '"') inString = false;
+      continue;
+    }
+    if (character === '"') {
+      inString = true;
+      result += character;
+      continue;
+    }
+    if (character === ",") {
+      let lookahead = index + 1;
+      while (/\s/.test(source[lookahead] || "")) lookahead++;
+      if (source[lookahead] === "}" || source[lookahead] === "]") continue;
+    }
+    result += character;
+  }
+  return result;
+}
+
+const menuSource = stripJsonComments(fs.readFileSync("config/zero/zero-menu.jsonc", "utf8"));
+JSON.parse(stripTrailingCommas(menuSource));
+NODE
+
+if rg -i 'omar''chy' . --glob '!.git/**' >/dev/null; then
+  fail "source-project branding remains"
+fi
+
+branded_path=$(find . -path './.git' -prune -o -iname '*omar''chy*' -print -quit)
+[[ -z $branded_path ]] || fail "source-project branding remains in path: $branded_path"
+
+branded_link=$(find . -path './.git' -prune -o -type l -lname '*omar''chy*' -print -quit)
+[[ -z $branded_link ]] || fail "source-project branding remains in symlink target: $branded_link"
+
+broken_link=$(find . -path './.git' -prune -o -xtype l -print -quit)
+[[ -z $broken_link ]] || fail "broken symlink remains: $broken_link"
+
+prohibited_pattern='\b(chat''gpt|open''ai|code''x|clau''de|gr''ok|olla''ma|open''code|her''mes|vox''type|ae''ther)\b|zero-'"agent"'|org\.zero\.'"agent"
+if rg -i "$prohibited_pattern" \
+  bin config default install shell themes \
+  --glob '!shell/plugins/emojis/**' \
+  --glob '!shell/plugins/polkit/**' >/dev/null; then
+  fail "prohibited integration identifier remains"
+fi
+
+if rg -i '^(sddm|gdm|lightdm|greetd)$' install/packages.core >/dev/null; then
+  fail "a display manager is included in the core package list"
+fi
+
+rg -F '"install.package": {"icon":"󰣇","label":"Package","action":"xdg-terminal-exec --app-id=org.zero.terminal zero-pkg-install"}' config/zero/zero-menu.jsonc >/dev/null || fail "Package installer menu entry is missing"
+rg -F '"install.aur": {"icon":"󰣇","label":"AUR","action":"xdg-terminal-exec --app-id=org.zero.terminal zero-pkg-aur-install"}' config/zero/zero-menu.jsonc >/dev/null || fail "AUR installer menu entry is missing"
+
+if rg -i '(install|remove)[.-]preinstalls' config/zero/zero-menu.jsonc >/dev/null; then
+  fail "preinstall lifecycle entries should not exist in Zero"
+fi
+
+rg -F 'systemctl set-default multi-user.target' install/system.sh >/dev/null || fail "installer does not configure TTY boot"
+rg -F 'uwsm start -g -1 -e -D Hyprland hyprland.desktop' bin/start-hyprland >/dev/null || fail "manual Hyprland launcher is missing"
+
+./bin/zero commands --check >/dev/null
+
+while IFS= read -r command_name; do
+  [[ $command_name == "zero-webapp-handler" ]] && continue
+  [[ -x bin/$command_name ]] || fail "menu command is missing or not executable: $command_name"
+done < <(rg -o --no-filename 'zero-[a-z0-9-]+' config/zero/zero-menu.jsonc | sort -u)
+
+echo "Zero static checks passed"

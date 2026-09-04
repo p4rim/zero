@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# zero:summary=Refresh the shell update status
+# zero:hidden=true
+
+set -e
+
+if zero-update-available >/dev/null; then
+  zero-shell -q zero.system-update refresh
+else
+  zero-shell -q zero.system-update clear
+fi

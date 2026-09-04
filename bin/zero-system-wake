@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# zero:summary=Wake displays and restore brightness after idle
+# zero:group=system
+# zero:name=wake
+# zero:examples=zero system wake
+
+zero-brightness-display on
+zero-brightness-keyboard restore
+zero-hyprland-monitor-clamshell >/dev/null 2>&1 || true

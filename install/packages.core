@@ -1,0 +1,94 @@
+# Session and desktop
+hyprland
+hyprland-guiutils
+quickshell
+uwsm
+xdg-desktop-portal-gtk
+xdg-desktop-portal-hyprland
+xdg-terminal-exec
+
+# Terminal and shell tools
+bash-completion
+bat
+btop
+eza
+fastfetch
+fd
+foot
+fzf
+git
+gum
+jq
+less
+ripgrep
+starship
+tmux
+tree-sitter-cli
+unzip
+zoxide
+
+# Desktop applications
+chromium
+imv
+mpv
+nautilus
+nautilus-python
+
+# Audio and media
+alsa-utils
+ffmpegthumbnailer
+pamixer
+pipewire
+pipewire-alsa
+pipewire-jack
+pipewire-pulse
+wireplumber
+
+# Hardware and session controls
+bluez
+bluez-tools
+bluez-utils
+brightnessctl
+ddcutil
+gnome-keyring
+hyprpicker
+hyprsunset
+libsecret
+networkmanager
+power-profiles-daemon
+udiskie
+wireless-regdb
+
+# Capture, clipboard, and desktop integration
+gpu-screen-recorder
+grim
+imagemagick
+inotify-tools
+inxi
+qrencode
+slurp
+socat
+tesseract
+tesseract-data-eng
+ttfx
+wl-clipboard
+wtype
+yt-dlp
+zbar
+
+# Fonts and rendering
+fontconfig
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+qt6-imageformats
+qt6-wayland
+ttf-jetbrains-mono-nerd
+woff2-font-awesome
+
+# Package installation support
+base-devel
+fakeroot
+pacman-contrib
+plocate
+yay

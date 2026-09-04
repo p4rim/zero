@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# zero:summary=Ensure default application launchers and mise wrappers are installed.
+
+# Copy .desktop declarations
+mkdir -p ~/.local/share/applications
+cp "$ZERO_PATH"/applications/*.desktop ~/.local/share/applications/
+
+if zero-cmd-present alacritty; then
+  cp "$ZERO_PATH/default/alacritty/Alacritty.desktop" ~/.local/share/applications/
+fi
+
+if [[ -f "$ZERO_PATH/install/user/mise.sh" ]]; then
+  bash "$ZERO_PATH/install/user/mise.sh"
+fi
+
+update-desktop-database ~/.local/share/applications

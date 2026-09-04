@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# zero:summary=Edit, set, or reset screensaver branding
+# zero:group=branding
+# zero:name=screensaver
+# zero:args=<image|text|reset>
+# zero:examples=zero branding screensaver image | zero branding screensaver text | zero branding screensaver reset
+
+set -euo pipefail
+
+case "${1:-}" in
+image)
+  image=$(zero-file-select --title "Pick PNG or SVG for screensaver" --extensions "png svg")
+  if zero-transcode-ascii "$image" ~/.config/zero/branding/screensaver.txt; then
+    zero-launch-screensaver force >/dev/null 2>&1
+  fi
+  ;;
+text)
+  zero-launch-editor ~/.config/zero/branding/screensaver.txt >/dev/null 2>&1 && zero-launch-screensaver force >/dev/null 2>&1
+  ;;
+reset)
+  cp "$ZERO_PATH/logo.txt" ~/.config/zero/branding/screensaver.txt && zero-launch-screensaver force >/dev/null 2>&1
+  ;;
+*)
+  echo "Usage: zero-branding-screensaver <image|text|reset>" >&2
+  exit 1
+  ;;
+esac

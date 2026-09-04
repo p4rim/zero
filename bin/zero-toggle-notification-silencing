@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# zero:summary=Toggle notification do-not-disturb mode
+
+state=$(zero-shell notifications toggleDnd 2>/dev/null || echo "")
+zero-shell -q zero.indicators refresh

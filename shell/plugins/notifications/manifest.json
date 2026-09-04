@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "zero.notifications",
+  "name": "Notifications",
+  "version": "1.0.0",
+  "author": "Zero",
+  "description": "Notification daemon, popups, DND, and history",
+  "kinds": [
+    "service"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml"
+  }
+}

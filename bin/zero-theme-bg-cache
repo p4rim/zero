@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# zero:summary=Cache background switcher thumbnails for the current theme
+
+theme_name=$(cat "$HOME/.local/state/zero/current/theme.name" 2>/dev/null)
+
+zero-menu-images \
+  --cache-only \
+  "$HOME/.local/state/zero/current/theme/backgrounds" \
+  "$HOME/.config/zero/backgrounds/$theme_name"

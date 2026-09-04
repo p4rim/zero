@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# zero:summary=Check whether a webcam is available
+
+[[ -n $(zero-capture-webcam-list) ]]

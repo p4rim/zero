@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# zero:summary=Set the default editor used by zero-launch-editor
+# zero:args=[code|zed|sublime_text|helix|vim|emacs|nvim]
+# zero:examples=zero default editor | zero default editor code | zero default editor helix
+
+installing=false
+if [[ ${1:-} == "--install" ]]; then
+  installing=true
+  shift
+fi
+
+editor_file="$HOME/.local/state/zero/defaults/editor"
+
+if (($# == 0)); then
+  if [[ -f $editor_file ]]; then
+    read -r editor <"$editor_file"
+  fi
+
+  [[ -n $editor ]] && echo "$editor" || echo "nvim"
+  exit 0
+fi
+
+case "$1" in
+code) selection="code"; editor="code"; name="VSCode"; glyph= ;;
+zed | zeditor) selection="zed"; editor="zeditor"; name="Zed"; glyph= ;;
+sublime_text) selection="sublime_text"; editor="sublime_text"; name="Sublime Text"; glyph= ;;
+helix) selection="helix"; editor="helix"; name="Helix"; glyph= ;;
+vim) selection="vim"; editor="vim"; name="Vim"; glyph= ;;
+emacs) selection="emacs"; editor="emacs"; name="Emacs"; glyph= ;;
+nvim) selection="nvim"; editor="nvim"; name="Neovim"; glyph= ;;
+*)
+  echo "Usage: zero-default-editor <code|zed|sublime_text|helix|vim|emacs|nvim>"
+  exit 1
+  ;;
+esac
+
+if zero-cmd-missing "$editor"; then
+  if [[ $installing == "false" ]]; then
+    exec zero-launch-floating-terminal-with-presentation zero-default-editor --install "$selection"
+  else
+    case "$selection" in
+    code) zero-install-editor-vscode ;;
+    zed) zero-install-editor-zed ;;
+    sublime_text) zero-pkg-add sublime-text-4 ;;
+    helix) zero-install-editor-helix ;;
+    vim) zero-pkg-add vim ;;
+    emacs) zero-install-editor-emacs ;;
+    nvim) zero-pkg-add neovim ;;
+    esac || exit 1
+  fi
+fi
+
+mkdir -p "$(dirname "$editor_file")"
+printf '%s\n' "$editor" >"$editor_file"
+
+zero-notification-send -g $glyph "$name is now the default editor"

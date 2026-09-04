@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "zero.emojis",
+  "name": "Emojis",
+  "version": "1.0.0",
+  "author": "Zero",
+  "description": "Search, copy, and type emojis",
+  "kinds": [
+    "overlay"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "overlay": "Emojis.qml"
+  }
+}

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# zero:summary=Return success when Arch or AUR updates are available
+# zero:hidden=true
+
+set -o pipefail
+
+if command -v checkupdates >/dev/null 2>&1 && checkupdates 2>/dev/null | head -n 1 | grep -q .; then
+  exit 0
+fi
+
+if command -v yay >/dev/null 2>&1 && yay -Qua 2>/dev/null | head -n 1 | grep -q .; then
+  exit 0
+fi
+
+exit 1

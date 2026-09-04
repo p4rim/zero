@@ -1,0 +1,6 @@
+#!/bin/bash
+# zero:summary=Launch emojis
+# zero:group=menu
+# zero:examples=zero menu emoji
+
+zero-shell shell toggle zero.emojis

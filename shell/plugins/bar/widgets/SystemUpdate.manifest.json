@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "zero.system-update",
+  "name": "Zero update",
+  "version": "1.0.0",
+  "author": "Zero",
+  "description": "Indicates available Zero updates",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "SystemUpdate.qml"
+  },
+  "barWidget": {
+    "displayName": "Zero update",
+    "description": "Indicates available Zero updates",
+    "category": "System",
+    "allowMultiple": false
+  }
+}

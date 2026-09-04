@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# zero:summary=Open the Zero background switcher
+# zero:group=theme
+# zero:name=bg-switcher
+# zero:aliases=zero background
+
+theme_name=$(cat "$HOME/.local/state/zero/current/theme.name" 2>/dev/null)
+current_background=$(readlink -f "$HOME/.local/state/zero/current/background" 2>/dev/null)
+
+zero-menu-images \
+  --selected "$current_background" \
+  "$HOME/.local/state/zero/current/theme/backgrounds" \
+  "$HOME/.config/zero/backgrounds/$theme_name"

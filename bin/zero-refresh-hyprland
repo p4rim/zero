@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# zero:summary=Overwrite all the user Hyprland Lua configs in ~/.config/hypr with the Zero defaults.
+
+zero-refresh-config hypr/.luarc.json
+zero-refresh-config hypr/autostart.lua
+zero-refresh-config hypr/bindings.lua
+zero-refresh-config hypr/input.lua
+zero-refresh-config hypr/looknfeel.lua
+zero-refresh-config hypr/hyprland.lua
+zero-refresh-config hypr/monitors.lua
+
+mkdir -p ~/.local/state/zero/toggles/hypr
+cp "$ZERO_PATH/default/hypr/toggles/flags.lua" ~/.local/state/zero/toggles/hypr/

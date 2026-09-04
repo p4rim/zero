@@ -1,0 +1,4 @@
+[ -r /etc/profile.d/zero.sh ] && . /etc/profile.d/zero.sh
+
+export TERMINAL=xdg-terminal-exec
+export EDITOR="zero-launch-editor --inline"

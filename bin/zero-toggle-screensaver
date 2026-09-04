@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# zero:summary=Toggle screensaver availability
+
+zero-toggle screensaver-off
+
+if zero-toggle-enabled screensaver-off; then
+  zero-notification-send -g 󱄄 "Screensaver disabled"
+else
+  zero-notification-send -g 󱄄 "Screensaver enabled"
+fi

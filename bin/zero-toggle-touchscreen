@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# zero:summary=Enable, disable, or toggle the touch functionality of the screen
+# zero:args=[on|off|toggle]
+
+exec zero-toggle-input-device touchscreen "${1:-toggle}"

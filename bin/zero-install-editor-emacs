@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# zero:summary=Install Emacs and make it the default editor
+
+echo "Installing Emacs..."
+zero-pkg-add emacs
+zero-default-editor emacs
+
+setsid uwsm-app -- emacs >/dev/null 2>&1 &

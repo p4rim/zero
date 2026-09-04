@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# zero:summary=Display the Zero logo in the terminal.
+
+clear
+echo -e "\033[97m"
+cat <$ZERO_PATH/logo.txt
+echo -e "\033[0m"
+echo

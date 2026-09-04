@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# zero:summary=Install Arch packages if they are missing
+# zero:args=<packages...>
+# zero:examples=zero pkg add jq ripgrep
+# zero:requires-sudo=true
+
+official_packages=()
+aur_packages=()
+
+for pkg in "$@"; do
+  pacman -Q "$pkg" &>/dev/null && continue
+
+  if pacman -Si "$pkg" &>/dev/null; then
+    official_packages+=("$pkg")
+  else
+    aur_packages+=("$pkg")
+  fi
+done
+
+if (( ${#official_packages[@]} > 0 )); then
+  if (( EUID == 0 )); then
+    pacman -S --noconfirm --needed "${official_packages[@]}" || exit 1
+  else
+    sudo pacman -S --noconfirm --needed "${official_packages[@]}" || exit 1
+  fi
+fi
+
+if (( ${#aur_packages[@]} > 0 )); then
+  if (( EUID == 0 )); then
+    echo "AUR packages must be installed as a regular user: ${aur_packages[*]}" >&2
+    exit 1
+  elif command -v yay >/dev/null 2>&1; then
+    yay -S --noconfirm --needed "${aur_packages[@]}" || exit 1
+  else
+    echo "yay is required to install AUR packages: ${aur_packages[*]}" >&2
+    exit 1
+  fi
+fi
+
+for pkg in "$@"; do
+  # Secondary check to handle states where pacman doesn't actually register an error
+  if ! pacman -Q "$pkg" &>/dev/null; then
+    echo -e "\033[31mError: Package '$pkg' did not install\033[0m" >&2
+    exit 1
+  fi
+done
+
+exit 0

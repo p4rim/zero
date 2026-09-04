@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "zero.menu",
+  "name": "Zero menu",
+  "version": "1.0.0",
+  "author": "Zero",
+  "description": "Quickshell-powered Zero command menu",
+  "kinds": [
+    "menu",
+    "bar-widget"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "menu": "Menu.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Zero menu",
+    "description": "Launches the Zero menu",
+    "category": "Compositor",
+    "allowMultiple": false
+  }
+}

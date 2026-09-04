@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# zero:summary=Reset shell.json to Zero defaults
+# zero:examples=zero refresh shell
+
+set -euo pipefail
+
+zero-refresh-config zero/shell.json
+zero-bar defaults
+
+zero-restart-shell

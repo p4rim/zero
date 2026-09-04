@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# zero:summary=Enable, disable, or toggle the touchpad
+# zero:args=[on|off|toggle]
+
+exec zero-toggle-input-device touchpad "${1:-toggle}"

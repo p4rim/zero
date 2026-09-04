@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# zero:summary=Reload hyprland configuration (used by the Zero theme switching).
+
+hyprctl reload >/dev/null

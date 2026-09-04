@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# zero:summary=Overwrite the user tmux config with the Zero default and reload tmux.
+
+zero-refresh-config tmux/tmux.conf
+zero-restart-tmux

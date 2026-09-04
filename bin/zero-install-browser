@@ -1,0 +1,98 @@
+#!/bin/bash
+
+# zero:summary=Install a supported browser
+# zero:args=<chromium|chrome|brave|brave-origin|edge|firefox|zen>
+# zero:examples=zero install browser chromium | zero install browser firefox
+
+set -e
+
+source "$ZERO_PATH/install/helpers/browser-policy.sh"
+
+setup_chromium_policy_directory() {
+  browser_policy_setup_dir "$1"
+}
+
+announce_browser_installed() {
+  echo ""
+  echo "$1 browser installed. Make it the default via Setup > Defaults > Browser."
+}
+
+copy_chromium_flags() {
+  mkdir -p ~/.config
+  cp -f "$ZERO_PATH/config/chromium-flags.conf" "$1"
+  zero-install-chromium-copy-url
+  zero-install-chromium-ytdlp
+}
+
+setup_firefox_wayland() {
+  mkdir -p ~/.config/environment.d
+  echo "MOZ_ENABLE_WAYLAND=1" > ~/.config/environment.d/zero-firefox-wayland.conf
+}
+
+case $1 in
+chromium)
+  echo "Installing Chromium..."
+  zero-pkg-add chromium
+
+  setup_chromium_policy_directory /etc/chromium/policies/managed
+  copy_chromium_flags ~/.config/chromium-flags.conf
+  zero-theme-set-browser
+  announce_browser_installed "Chromium"
+  ;;
+chrome)
+  echo "Installing Chrome..."
+  zero-pkg-aur-add google-chrome || exit 1
+
+  setup_chromium_policy_directory /etc/opt/chrome/policies/managed
+  copy_chromium_flags ~/.config/chrome-flags.conf
+  zero-theme-set-browser
+  announce_browser_installed "Chrome"
+  ;;
+edge)
+  echo "Installing Edge..."
+  zero-pkg-aur-add microsoft-edge-stable-bin || exit 1
+
+  setup_chromium_policy_directory /etc/opt/edge/policies/managed
+  copy_chromium_flags ~/.config/microsoft-edge-stable-flags.conf
+  zero-theme-set-browser
+  announce_browser_installed "Edge"
+  ;;
+brave)
+  echo "Installing Brave..."
+  zero-pkg-aur-add brave-bin || exit 1
+
+  setup_chromium_policy_directory /etc/brave/policies/managed
+  copy_chromium_flags ~/.config/brave-flags.conf
+  zero-theme-set-browser
+  announce_browser_installed "Brave"
+  ;;
+brave-origin)
+  echo "Installing Brave Origin..."
+  zero-pkg-aur-add brave-origin-bin || exit 1
+
+  setup_chromium_policy_directory /etc/brave/policies/managed
+  copy_chromium_flags ~/.config/brave-origin-flags.conf
+  zero-theme-set-browser
+  announce_browser_installed "Brave Origin"
+  ;;
+firefox)
+  echo "Installing Firefox..."
+  zero-pkg-add firefox || exit 1
+
+  browser_policy_setup_firefox_distribution /usr/lib/firefox/distribution
+  setup_firefox_wayland
+  announce_browser_installed "Firefox"
+  ;;
+zen)
+  echo "Installing Zen..."
+  zero-pkg-aur-add zen-browser-bin || exit 1
+
+  browser_policy_setup_firefox_distribution /opt/zen-browser/distribution
+  setup_firefox_wayland
+  announce_browser_installed "Zen"
+  ;;
+*)
+  echo "Usage: zero-install-browser <chromium|chrome|brave|brave-origin|edge|firefox|zen>"
+  exit 1
+  ;;
+esac

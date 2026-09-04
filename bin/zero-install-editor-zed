@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# zero:summary=Install Zed Editor and make it the default editor
+
+echo "Installing Zed Editor..."
+zero-pkg-add zed
+zero-default-editor zed
+
+setsid uwsm-app -- gtk-launch dev.zed.Zed >/dev/null 2>&1 &

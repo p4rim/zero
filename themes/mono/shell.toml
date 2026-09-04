@@ -1,0 +1,125 @@
+[bar]
+background = "#000000"
+background-alpha = 1.0
+text = "#ffffff"
+active = "#ffffff"
+scale-with-font = true
+size-horizontal = 26
+size-vertical = 28
+
+[hyprland]
+active-border = "#ffffff"
+active-border-foreground = "#ffffff"
+
+[controls]
+normal-color = "#ffffff"
+normal-fill-alpha = 0.02
+normal-border = "#ffffff"
+normal-border-width = 1
+normal-border-alpha = 0.35
+hover-cursor-color = "#ffffff"
+hover-cursor-fill-alpha = 0.10
+hover-cursor-border = "#ffffff"
+hover-cursor-border-width = 1
+hover-cursor-border-alpha = 0.75
+focus-color = "#ffffff"
+focus-fill-alpha = 0.10
+focus-border = "#ffffff"
+focus-border-width = 1
+focus-border-alpha = 1.0
+selected-color = "#ffffff"
+selected-fill-alpha = 0.18
+selected-border = "#ffffff"
+selected-border-width = 1
+selected-border-alpha = 1.0
+
+[spacing]
+scale = 1.0
+scale-with-font = true
+
+[font]
+base-size = 12
+
+[popups]
+background = "#000000"
+background-alpha = 1.0
+text = "#ffffff"
+border = "#ffffff"
+border-alpha = 1.0
+
+[tooltip]
+background = "#000000"
+background-alpha = 1.0
+text = "#ffffff"
+border = "#ffffff"
+border-alpha = 0.75
+
+[notifications]
+background = "#000000"
+background-alpha = 1.0
+text = "#ffffff"
+border = "#ffffff"
+border-alpha = 1.0
+countdown = "#ffffff"
+
+[launcher]
+background = "#000000"
+background-alpha = 0.98
+text = "#ffffff"
+border = "#ffffff"
+border-alpha = 1.0
+scrim = "#000000"
+scrim-alpha = 0.75
+selected-background = "#ffffff"
+selected-background-alpha = 0.14
+selected-text = "#ffffff"
+selected-border = "#ffffff"
+selected-border-alpha = 1.0
+
+[menu]
+background = "#000000"
+background-alpha = 1.0
+text = "#ffffff"
+border = "#ffffff"
+border-alpha = 1.0
+scrim = "#000000"
+scrim-alpha = 0.75
+selected-background = "#ffffff"
+selected-background-alpha = 0.14
+selected-text = "#ffffff"
+selected-border = "#ffffff"
+selected-border-alpha = 1.0
+
+[polkit]
+background = "#000000"
+background-alpha = 1.0
+text = "#ffffff"
+text-error = "#ffffff"
+border = "#ffffff"
+border-error = "#ffffff"
+border-alpha = 1.0
+scrim = "#000000"
+scrim-alpha = 0.75
+accent = "#ffffff"
+
+[lock]
+background = "#000000"
+background-alpha = 0.92
+text = "#ffffff"
+placeholder = "#a3a3a3"
+text-error = "#ffffff"
+border = "#ffffff"
+border-active = "#ffffff"
+border-error = "#ffffff"
+border-alpha = 1.0
+selection = "#ffffff"
+selection-alpha = 0.35
+
+[image-picker]
+scrim = "#000000"
+scrim-alpha = 0.80
+text = "#ffffff"
+selected-border = "#ffffff"
+selected-border-alpha = 1.0
+unselected-border = "#ffffff"
+unselected-border-alpha = 0.25

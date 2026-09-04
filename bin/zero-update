@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# zero:summary=Update Arch packages and refresh the Zero desktop
+# zero:requires-sudo=true
+
+set -euo pipefail
+
+sudo pacman -Syu
+
+if command -v yay >/dev/null 2>&1; then
+  yay -Sua
+fi
+
+zero-restart-shell

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [[ -n ${WAYLAND_DISPLAY:-} ]]; then
+  echo "A Wayland session is already active." >&2
+  exit 1
+fi
+
+export ZERO_PATH="${ZERO_PATH:-/usr/share/zero}"
+export PATH="$ZERO_PATH/bin:$PATH"
+
+exec uwsm start -g -1 -e -D Hyprland hyprland.desktop

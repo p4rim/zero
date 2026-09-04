@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# zero:summary=Edit, set, or reset About branding
+# zero:group=branding
+# zero:name=about
+# zero:args=<image|text|reset>
+# zero:examples=zero branding about image | zero branding about text | zero branding about reset
+
+set -euo pipefail
+
+case "${1:-}" in
+image)
+  image=$(zero-file-select --title "Pick PNG or SVG for About" --extensions "png svg")
+  if zero-transcode-ascii "$image" ~/.config/zero/branding/about.txt --width 54 --height 26; then
+    zero-launch-about >/dev/null 2>&1
+  fi
+  ;;
+text)
+  zero-launch-editor ~/.config/zero/branding/about.txt >/dev/null 2>&1 && zero-launch-about >/dev/null 2>&1
+  ;;
+reset)
+  cp "$ZERO_PATH/icon.txt" ~/.config/zero/branding/about.txt && zero-launch-about >/dev/null 2>&1
+  ;;
+*)
+  echo "Usage: zero-branding-about <image|text|reset>" >&2
+  exit 1
+  ;;
+esac

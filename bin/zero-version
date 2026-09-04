@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# zero:summary=Print the installed Zero version
+
+zero_path=${ZERO_PATH:-/usr/share/zero}
+zero_path=${zero_path%/}
+
+if [[ $zero_path != "/usr/share/zero" ]]; then
+  hash=$(git -C "$zero_path" rev-parse --short HEAD 2>/dev/null || true)
+
+  if [[ -n $hash ]]; then
+    echo "dev ($hash)"
+  else
+    echo "dev"
+  fi
+
+  exit 0
+fi
+
+[[ -r $zero_path/version ]] || exit 1
+cat "$zero_path/version"
