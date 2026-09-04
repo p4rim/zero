@@ -70,7 +70,7 @@ slurp
 socat
 tesseract
 tesseract-data-eng
-ttfx
+python-terminaltexteffects
 wl-clipboard
 wtype
 yt-dlp
@@ -91,4 +91,4 @@ base-devel
 fakeroot
 pacman-contrib
 plocate
-yay
+yay-bin

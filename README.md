@@ -24,6 +24,8 @@ To install only the Zero files and configuration while developing on a machine t
 
 The installer backs up an existing `~/.config/hypr` or `~/.config/zero` tree under `~/.local/state/zero/backups/` before installing its defaults.
 
+For a clean-machine walkthrough and first-boot checklist, see [Testing on fresh Arch](docs/testing-on-fresh-arch.md).
+
 ## Session
 
 After rebooting:
